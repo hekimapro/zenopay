@@ -1,8 +1,13 @@
 {
   "name": "zenopay",
   "version": "0.0.1",
-  "description": "ZenoPay",
-  "main": "index.js",
+  "description": "ZenoPay is a simple and seamless payment designed for developers looking to integrate secure and reliable payment functionality into their mobile, frontend, or backend applications. With minimal setup, you can initiate payments and track their statuses effortlessly.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "./dist",
+    "./dist/**/*.js"
+  ],
   "scripts": {
     "dev": "nodemon src/index.ts",
     "prod": "npm run build && npm publish --access=public",
@@ -15,9 +20,14 @@
   "keywords": [
     "ZenoPay",
     "Payment",
-    "Integration"
+    "Integration",
+    "M-PESA", "TIGOPESA", "MIX BY YAS", "HALOPESA", "AIRTEL MONEY"
   ],
-  "author": "HekimaPro",
+  "author": {
+    "email": "hekima.dev@gmail.com",
+    "name": "Hekima Peter",
+    "url": "https://github.com/hekimapro"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/hekimapro/zenopay/issues"

@@ -1,55 +1,135 @@
-import ZenoPay from "./package"; // Import the ZenoPay class from the package.
+import qs from "qs" // Library for handling query string formatting.
+import axios from "axios" // HTTP client for making API requests.
+import { email, number, string } from "fast-web-kit" // Utility functions for validation.
+import { PaymentOptionsType, RequestResponseType, ZenoPayOptionsType } from "./types" // Custom type definitions for ZenoPay.
 
-// Configuration options for initializing ZenoPay instance.
-const zenoPayOptions = {
-    accountID: "zp51004", // ZenoPay account identifier.
-    apiKey: "e043615fdc83bac55e2a4a1395aa818a", // API key for authentication.
-    secretKey: "173752605b09853559b5dbc900f6a169dbf5a6f311bc2bb611cb5f90350b04e9", // Secret key for secure requests.
-};
+class ZenoPay {
 
-// Create an instance of ZenoPay using the provided configuration options.
-const zenoPay = new ZenoPay(zenoPayOptions);
+    // Class properties
+    private apiKey: string // API key for authenticating requests.
+    private baseURL: string // Base URL for the ZenoPay API.
+    private secretKey: string // Secret key for secure API requests.
+    private accountID: string // Unique identifier for the ZenoPay account.
+    private headers: any // HTTP headers for API requests.
 
-/**
- * Demonstrates how to make a payment using the ZenoPay API.
- */
-async function makePayment() {
-    try {
-        // Define payment details, including amount and customer information.
-        const paymentOptions = {
-            amountToCharge: 500, // Amount to be charged in the transaction.
-            customerName: "Hekima Peter", // Name of the customer.
-            customerPhoneNumber: "0752628215", // Customer's phone number.
-            customerEmail: "info@hekima.pro", // Customer's email address.
-        };
+    /**
+     * Initializes a new instance of the ZenoPay class.
+     * @param zenoPayOptions - Configuration options including API key, secret key, and account ID.
+     */
+    constructor(zenoPayOptions: ZenoPayOptionsType) {
+        this.apiKey = zenoPayOptions.apiKey
+        this.secretKey = zenoPayOptions.secretKey
+        this.accountID = zenoPayOptions.accountID
+        this.baseURL = "https://api.zeno.africa"
+        this.headers = {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded" // API requires form-encoded data.
+            }
+        }
+    }
 
-        // Call the Pay method to initiate the payment and log the response.
-        const result = await zenoPay.Pay(paymentOptions);
+    /**
+     * Handles making POST requests to the ZenoPay API.
+     * @param route - API endpoint route.
+     * @param requestData - Data to send with the request.
+     * @returns A promise resolving to the API response.
+     */
+    private postRequest = async (route: string, requestData: any): Promise<RequestResponseType> => {
+        try {
 
-        console.log(result); // Log the API response to the console.
-    } catch (error) {
-        // Log any errors encountered during the payment process.
-        console.error(error);
+            // Convert request data to query string format.
+            requestData = qs.stringify(requestData)
+
+            const response: any = await axios.post(`${this.baseURL}/${route}`, requestData, this.headers)
+
+            const { status }: any = response.data
+
+            // Return success or failure based on the API response status.
+            if (status === "success")
+                return { success: true, message: { ...response.data } }
+
+            return { success: false, message: response.data.message }
+        } catch (error) {
+            // Handle errors and return a failure response with the error message.
+            return { success: false, message: (error as Error).message }
+        }
+    }
+
+    /**
+     * Initiates a payment request.
+     * @param paymentOptions - Details of the payment including customer info and amount.
+     * @returns A promise resolving to the payment API response.
+     */
+    public Pay = async (paymentOptions: PaymentOptionsType): Promise<RequestResponseType> => {
+        try {
+            // Validate required payment details.
+            if (string.isEmpty(paymentOptions.customerName))
+                return { success: false, message: "Customer name is required" }
+
+            if (string.isEmpty(paymentOptions.customerEmail))
+                return { success: false, message: "Customer email is required" }
+
+            if (!email.isValid(paymentOptions.customerEmail))
+                return { success: false, message: "Invalid customer email" }
+
+            if (string.isEmpty(paymentOptions.customerPhoneNumber))
+                return { success: false, message: "Customer phone number is required" }
+
+            const phoneNumberLength = string.getLength(paymentOptions.customerPhoneNumber)
+
+            if (phoneNumberLength !== 10 && phoneNumberLength !== 12)
+                return { success: false, message: "Customer phone number must have 10 or 12 characters" }
+
+            if (!number.isValid(paymentOptions.amountToCharge))
+                return { success: false, message: "Invalid amount" }
+
+            if (paymentOptions.amountToCharge <= 0)
+                return { success: false, message: "Amount cannot be less than or equal to 0" }
+
+            // Construct the request payload for the API.
+            const requestData = {
+                create_order: 1,
+                api_key: this.apiKey,
+                account_id: this.accountID,
+                secret_key: this.secretKey,
+                amount: paymentOptions.amountToCharge,
+                buyer_name: paymentOptions.customerName,
+                buyer_email: paymentOptions.customerEmail,
+                buyer_phone: paymentOptions.customerPhoneNumber,
+            }
+
+            // Make the API call and return the response.
+            return this.postRequest("", requestData)
+        } catch (error) {
+            // Handle errors and return a failure response.
+            return { success: false, message: (error as Error).message }
+        }
+    }
+
+    /**
+     * Checks the status of a payment using its order ID.
+     * @param orderID - The unique identifier of the order.
+     * @returns A promise resolving to the payment status API response.
+     */
+    public CheckPaymentStatus = async (orderID: string): Promise<RequestResponseType> => {
+        try {
+            // Validate the order ID.
+            if (string.isEmpty(orderID))
+                return { success: false, message: "Order ID is required" }
+
+            // Construct the request payload for the API.
+            const requestData = {
+                check_status: 1,
+                order_id: orderID,
+            }
+
+            // Make the API call and return the response.
+            return this.postRequest("order-status", requestData)
+        } catch (error) {
+            // Handle errors and return a failure response.
+            return { success: false, message: (error as Error).message }
+        }
     }
 }
 
-/**
- * Demonstrates how to check the payment status of a specific order.
- * @param orderID - The unique identifier of the order to check.
- */
-async function checkPaymentStatus(orderID: string) {
-    try {
-        // Call the CheckPaymentStatus method and log the response.
-        const result = await zenoPay.CheckPaymentStatus(orderID);
-
-        console.log(result); // Log the API response to the console.
-    } catch (error) {
-        // Log any errors encountered while checking the payment status.
-        console.error(error);
-    }
-}
-
-// Uncomment the following lines to execute the functions:
-
-// makePayment(); // Execute the makePayment function to initiate a payment.
-// checkPaymentStatus("674c0d32b09dd"); // Execute the checkPaymentStatus function to check the status of an order.
+export default ZenoPay

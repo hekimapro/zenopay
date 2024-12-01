@@ -2,6 +2,15 @@
 
 ZenoPay is a simple and seamless payment designed for developers looking to integrate secure and reliable payment functionality into their mobile, frontend, or backend applications. With minimal setup, you can initiate payments and track their statuses effortlessly.
 
+### Supported Mobile Networks
+ZenoPay supports the following mobile payment networks:
+- **M-PESA**
+- **TIGOPESA (MIX BY YAS)**
+- **HALOPESA**
+- **AIRTEL MONEY**
+
+---
+
 ## Features
 
 - **Easy Integration**: Quickly integrate with your app (mobile, frontend, or backend).
@@ -62,7 +71,7 @@ async function checkPaymentStatus(orderID: string) {
 ```
 
 ### 2. **Frontend Integration**
-Use the SDK in a React or Angular application to process payments directly in the browser:
+Use the ZenoPay in a React or Angular application to process payments directly in the browser:
 
 ```javascript
 import ZenoPay from "zenopay";
@@ -198,7 +207,7 @@ Returns a promise resolving to:
 
 ## Support
 
-For questions or support, contact us at [support@zenopay.africa](mailto:support@zenopay.africa).
+For questions or support, contact us at [md@zeno.co.tz](mailto:md@zeno.co.tz).
 
 ---
 
