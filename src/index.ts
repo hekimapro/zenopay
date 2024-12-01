@@ -1,11 +1,8 @@
 import { PaymentOptionsType, RequestResponseType, ZenoPayOptionsType } from "./types/index"
+import qs from "qs"
+import axios from "axios"
+import {string, number, email} from "fast-web-kit"
 
-// Library for handling query string formatting.
-const qs = require("qs")
-// Utility functions for validation.
-const { email, number, string } = require("fast-web-kit")
-// Custom type definitions for ZenoPay.
-const axios = require("axios")
 
 class ZenoPay {
 
