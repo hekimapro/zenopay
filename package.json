@@ -1,0 +1,35 @@
+{
+  "name": "zenopay",
+  "version": "0.0.1",
+  "description": "ZenoPay",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "prod": "npm run build && npm publish --access=public",
+    "build": "tsc -p ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hekimapro/zenopay.git"
+  },
+  "keywords": [
+    "ZenoPay",
+    "Payment",
+    "Integration"
+  ],
+  "author": "HekimaPro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hekimapro/zenopay/issues"
+  },
+  "homepage": "https://github.com/hekimapro/zenopay#readme",
+  "dependencies": {
+    "axios": "^1.7.8",
+    "fast-web-kit": "^0.7.5",
+    "qs": "^6.13.1"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.9.36",
+    "@types/qs": "^6.9.17"
+  }
+}
