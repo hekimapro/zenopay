@@ -41,8 +41,5 @@
     "axios": "^1.7.8",
     "fast-web-kit": "^0.7.5",
     "qs": "^6.13.1"
-  },
-  "devDependencies": {
-    "@types/node": "^22.10.1"
   }
 }
