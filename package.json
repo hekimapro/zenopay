@@ -1,6 +1,6 @@
 {
   "name": "zenopay",
-  "version": "0.0.1",
+  "version": "0.0.8",
   "description": "ZenoPay is a simple and seamless payment designed for developers looking to integrate secure and reliable payment functionality into their mobile, frontend, or backend applications. With minimal setup, you can initiate payments and track their statuses effortlessly.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -21,7 +21,11 @@
     "ZenoPay",
     "Payment",
     "Integration",
-    "M-PESA", "TIGOPESA", "MIX BY YAS", "HALOPESA", "AIRTEL MONEY"
+    "M-PESA",
+    "TIGOPESA",
+    "MIX BY YAS",
+    "HALOPESA",
+    "AIRTEL MONEY"
   ],
   "author": {
     "email": "hekima.dev@gmail.com",
@@ -39,7 +43,6 @@
     "qs": "^6.13.1"
   },
   "devDependencies": {
-    "@types/axios": "^0.9.36",
-    "@types/qs": "^6.9.17"
+    "@types/node": "^22.10.1"
   }
 }

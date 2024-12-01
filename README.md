@@ -1,6 +1,6 @@
 # ZenoPay
 
-ZenoPay is a simple and seamless payment designed for developers looking to integrate secure and reliable payment functionality into their mobile, frontend, or backend applications. With minimal setup, you can initiate payments and track their statuses effortlessly.
+ZenoPay is a simple and seamless payment designed for developers looking to integrate secure and reliable payment functionality into their applications. With minimal setup, you can initiate payments and track their statuses effortlessly.
 
 ### Supported Mobile Networks
 ZenoPay supports the following mobile payment networks:
@@ -11,14 +11,6 @@ ZenoPay supports the following mobile payment networks:
 
 ---
 
-## Features
-
-- **Easy Integration**: Quickly integrate with your app (mobile, frontend, or backend).
-- **Secure Transactions**: All communication is encrypted using your API key and secret key.
-- **Flexible Usage**: Works seamlessly with different environments (React, Node.js, or mobile frameworks).
-- **Payment Status Tracking**: Easily check the status of payments.
-
----
 
 ## Installation
 
@@ -69,62 +61,6 @@ async function checkPaymentStatus(orderID: string) {
     console.log(result);
 }
 ```
-
-### 2. **Frontend Integration**
-Use the ZenoPay in a React or Angular application to process payments directly in the browser:
-
-```javascript
-import ZenoPay from "zenopay";
-
-const zenoPayOptions = {
-    accountID: "your-account-id",
-    apiKey: "your-api-key",
-    secretKey: "your-secret-key",
-};
-
-const zenoPay = new ZenoPay(zenoPayOptions);
-
-async function handlePayment() {
-    const paymentOptions = {
-        amountToCharge: 500,
-        customerName: "Jane Smith",
-        customerEmail: "jane.smith@example.com",
-        customerPhoneNumber: "0723456789",
-    };
-
-    const result = await zenoPay.Pay(paymentOptions);
-    console.log(result);
-}
-```
-
-### 3. **Mobile Integration**
-Integrate ZenoPay into mobile apps using JavaScript frameworks like React Native:
-
-```javascript
-import ZenoPay from "zenopay";
-
-const zenoPayOptions = {
-    accountID: "your-account-id",
-    apiKey: "your-api-key",
-    secretKey: "your-secret-key",
-};
-
-const zenoPay = new ZenoPay(zenoPayOptions);
-
-const makePayment = async () => {
-    const paymentOptions = {
-        amountToCharge: 200,
-        customerName: "Alice Brown",
-        customerEmail: "alice.brown@example.com",
-        customerPhoneNumber: "0734567890",
-    };
-
-    const result = await zenoPay.Pay(paymentOptions);
-    console.log(result);
-};
-```
-
----
 
 ## API Reference
 
