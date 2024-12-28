@@ -1,5 +1,6 @@
 
 export type PaymentOptionsType = {
+    callbackURL: string
     customerName: string
     customerEmail: string
     amountToCharge: number

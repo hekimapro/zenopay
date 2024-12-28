@@ -1,6 +1,6 @@
 {
   "name": "zenopay",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ZenoPay is a simple and seamless payment designed for developers looking to integrate secure and reliable payment functionality into their mobile, frontend, or backend applications. With minimal setup, you can initiate payments and track their statuses effortlessly.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

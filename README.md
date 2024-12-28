@@ -49,6 +49,7 @@ async function makePayment() {
         customerName: "John Doe",
         customerEmail: "johndoe@example.com",
         customerPhoneNumber: "0701234567",
+        callbackURL: "https://example.com/webhook"
     };
 
     const result = await zenoPay.Pay(paymentOptions);
@@ -73,6 +74,7 @@ Initiates a payment request.
   - `customerName` (string): Full name of the customer.
   - `customerEmail` (string): Email address of the customer.
   - `customerPhoneNumber` (string): Phone number of the customer (10 or 12 digits).
+  - `callbackURL` (string): Callback URL after payment has been processed successful.
 
 #### Response:
 Returns a promise resolving to:

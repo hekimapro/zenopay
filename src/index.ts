@@ -87,6 +87,9 @@ class ZenoPay {
             if (paymentOptions.amountToCharge <= 0)
                 return { success: false, message: "Amount cannot be less than or equal to 0" }
 
+            if (string.isEmpty(paymentOptions.callbackURL))
+                return { success: false, message: "callback URL must be provided"}
+
             // Construct the request payload for the API.
             const requestData = {
                 create_order: 1,
@@ -95,6 +98,7 @@ class ZenoPay {
                 secret_key: this.secretKey,
                 amount: paymentOptions.amountToCharge,
                 buyer_name: paymentOptions.customerName,
+                webhook_url: paymentOptions.callbackURL,
                 buyer_email: paymentOptions.customerEmail,
                 buyer_phone: paymentOptions.customerPhoneNumber,
             }
